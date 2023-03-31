@@ -26,6 +26,10 @@ li {
   align-items: center;
 }
 
+.li-header {
+  text-align: left;
+}
+
 .li-header h2 {
   color: #545862;
   font-size: 15px;
