@@ -6,6 +6,11 @@ const simpleTasks = [
   { description: 'wash the dishes', completed: false, index: 1 },
   { description: 'complete To Do List project', completed: false, index: 2 },
 ];
+simpleTasks.sort((a, b) => {
+  if (a.index > b.index) return 1;
+  if (a.index < b.index) return -1;
+  return 0;
+});
 const toDoList = (listData) => {
   let lists = `<li class="li-header"><h2>Today's To Do </h2><img class="right-icons" cl src="${arrowReapeat}"></li>`;
   lists
