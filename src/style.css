@@ -1,0 +1,127 @@
+body {
+  background-color: #f6f6f6;
+}
+
+ul {
+  box-sizing: border-box;
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
+  top: 0;
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: initial;
+  background-color: #fff;
+}
+
+li {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0;
+  align-items: center;
+}
+
+.li-header h2 {
+  color: #545862;
+  font-size: 15px;
+  font-weight: 400;
+  padding: 1rem;
+  line-height: 20px;
+  margin: 0;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.add-input {
+  display: flex;
+}
+
+.add-input form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#new-item {
+  border: none;
+  outline: none;
+  overflow: hidden;
+  resize: none;
+  padding: 0 40px 0 1rem;
+  line-height: 50px;
+  height: 50px;
+  font-style: italic;
+  width: 100%;
+}
+
+#submit-new-item {
+  appearance: none;
+  border: none;
+  background-color: #fff;
+  z-index: 0;
+  background-image: url(./assets/arrow-return-left.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 40px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.tasks div {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.tasks textarea {
+  height: 20px;
+  border: none;
+  box-sizing: inherit;
+  overflow: auto;
+  width: 100%;
+  padding: 15px 0;
+  line-height: 20px;
+  word-wrap: break-word;
+  resize: none;
+}
+
+.tasks textarea:focus {
+  outline: none;
+}
+
+.checkboxs {
+  margin: 15px;
+}
+
+li input {
+  margin: initial;
+}
+
+.btn-clear {
+  background-color: #f6f6f6;
+}
+
+.btn-clear button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  margin: 1rem auto;
+  width: 100%;
+  cursor: pointer;
+}
+
+.btn-clear button:hover {
+  text-decoration: underline;
+}
+
+.right-icons {
+  line-height: 0;
+  cursor: move;
+  padding-right: 10px;
+}
