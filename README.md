@@ -22,7 +22,7 @@
 - [❓ FAQ (OPTIONAL)](#faq)
 - [📝 License](#license)
 
-# 📖 [RMsoft website] <a name="about-project"></a>
+# 📖 [To Do List] <a name="about-project"></a>
 
 **[To do List]** is a simple HTML list of TO Do tasks
 
@@ -37,7 +37,7 @@
 
 The entire project was built with only HTML5, CSS3, JavaScript AND Webpack.
 
-# 📖 [RMsoft website] <a name="about-project"></a>
+# 📖 [To Do List] <a name="about-project"></a>
 
 In this project:
 
