@@ -55,7 +55,8 @@ In this project:
 ### Key Features <a name="key-features">
 
 - **[key_feature_1]** This website, built with CSS, Html and JavaScript.
-- **[key_feature_4]** Dynamic Content using JS
+- **[key_feature_2]** Dynamic Content using JS
+- **[key_feature_3]** CRU
   </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -88,7 +89,7 @@ To get a local copy up and running,clone this repository to your desired folder:
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- **Add and remove tasks**
+- **Interactive list**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
