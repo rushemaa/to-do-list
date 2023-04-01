@@ -4,8 +4,8 @@ import trach from '../assets/trash.svg';
 
 export const loadTasks = (localS, ul) => {
   let lists = `<li class="li-header"><h2>Today's To Do </h2><img class="right-icons-h" cl src="${arrowReapeat}"></li>`;
-  lists
-    += '<li class="add-input"><form> <input id="new-item" class="new-item" placeholder="Add to your list..." type="text"> <input id="submit-new-item" type="submit" tabindex="-1" value="" title="click this or press enter to submit" class="icon-return"> </form></li>';
+  lists +=
+    '<li class="add-input"><form> <input id="new-item" class="new-item" placeholder="Add to your list..." type="text"> <input id="submit-new-item" type="submit" tabindex="-1" value="" title="click this or press enter to submit" class="icon-return"> </form></li>';
   const simpleTasks = [];
   if (localS) {
     simpleTasks.push(...JSON.parse(localS));
@@ -18,10 +18,13 @@ export const loadTasks = (localS, ul) => {
   const toDoList = (listData) => {
     let lists = '';
     listData.forEach((list) => {
-      lists += `<li class='tasks' ><div><input class='checkboxs' type='checkbox' /><textarea id="edit-${list.index}">${list.description}</textarea></div> <img class="right-icons" id="remove-${list.index}" src="${threeDots}"></li>`;
+      const { description, completed, index } = list;
+      lists += `<li class='tasks' ><div><input class='checkboxs' ${
+        completed ? 'checked' : ''
+      }  type='checkbox' id="status-${index}" value="${completed}" /><textarea id="edit-${index}">${description}</textarea></div> <img class="right-icons" id="remove-${index}" src="${threeDots}"></li>`;
     });
-    lists
-      += '<li class="btn-clear"><button type="button">Clear all completed</button></li>';
+    lists +=
+      '<li class="btn-clear"><button type="button">Clear all completed</button></li>';
     return lists;
   };
 
@@ -42,6 +45,30 @@ export function updateTaks() {
   });
 }
 
+export function changeStatus() {
+  const editt = [];
+  if (localStorage.getItem('lists')) {
+    editt.push(...JSON.parse(localStorage.getItem('lists')));
+  }
+  editt.forEach((task) => {
+    const check = document.getElementById(`status-${task.index}`);
+    check.addEventListener('change', () => {
+      const neww = editt.map((p) => {
+        if (p.index === task.index) {
+          return {
+            description: p.description,
+            completed: !p.completed,
+            index: p.index,
+          };
+        }
+        return p;
+      });
+      localStorage.setItem('lists', JSON.stringify(neww));
+      changeStatus();
+    });
+  });
+}
+
 export function deleteTaks(ul) {
   const tobeDelate = [];
   if (localStorage.getItem('lists')) {
@@ -57,14 +84,26 @@ export function deleteTaks(ul) {
     });
     removeBtn.addEventListener('click', () => {
       const NewList = tobeDelate.filter(
-        (element) => element.index !== task.index,
+        (element) => element.index !== task.index
       );
       localStorage.setItem('lists', JSON.stringify(NewList));
       loadTasks(JSON.stringify(NewList), ul);
-      updateTaks();
       deleteTaks(ul);
+      updateTaks();
     });
   });
+}
+
+export function deleteAllTaks(ul) {
+  const tobeDelate = [];
+  if (localStorage.getItem('lists')) {
+    tobeDelate.push(...JSON.parse(localStorage.getItem('lists')));
+  }
+  const NewList = tobeDelate.filter((element) => element.completed !== true);
+  localStorage.setItem('lists', JSON.stringify(NewList));
+  loadTasks(JSON.stringify(NewList), ul);
+  deleteTaks(ul);
+  updateTaks();
 }
 
 export function addTask(description, ul) {
@@ -88,7 +127,8 @@ export function addTask(description, ul) {
   addInput.addEventListener('submit', (event) => {
     event.preventDefault();
     addTask(document.querySelector('#new-item'), ul);
-    updateTaks();
     deleteTaks(ul);
+    updateTaks();
+    changeStatus();
   });
 }
