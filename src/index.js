@@ -4,6 +4,7 @@ import {
   addTask,
   deleteTaks,
   updateTaks,
+  changeStatus,
 } from './modules/functions.js';
 
 const ul = document.querySelector('ul');
@@ -14,6 +15,8 @@ addInput.addEventListener('submit', (event) => {
   addTask(document.querySelector('#new-item'), ul);
   deleteTaks(ul);
   updateTaks();
+  changeStatus();
 });
 deleteTaks(ul);
 updateTaks();
+changeStatus();

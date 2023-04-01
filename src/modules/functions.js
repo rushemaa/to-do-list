@@ -18,7 +18,10 @@ export const loadTasks = (localS, ul) => {
   const toDoList = (listData) => {
     let lists = '';
     listData.forEach((list) => {
-      lists += `<li class='tasks' ><div><input class='checkboxs' type='checkbox' /><textarea id="edit-${list.index}">${list.description}</textarea></div> <img class="right-icons" id="remove-${list.index}" src="${threeDots}"></li>`;
+      const { description, completed, index } = list;
+      lists += `<li class='tasks' ><div><input class='checkboxs' ${
+        completed ? 'checked' : ''
+      }  type='checkbox' id="status-${index}" value="${completed}" /><textarea id="edit-${index}">${description}</textarea></div> <img class="right-icons" id="remove-${index}" src="${threeDots}"></li>`;
     });
     lists
       += '<li class="btn-clear"><button type="button">Clear all completed</button></li>';
@@ -38,6 +41,20 @@ export function updateTaks() {
     editField.addEventListener('blur', () => {
       task.description = editField.value;
       localStorage.setItem('lists', JSON.stringify(edit));
+    });
+  });
+}
+
+export function changeStatus() {
+  const items = [];
+  if (localStorage.getItem('lists')) {
+    items.push(...JSON.parse(localStorage.getItem('lists')));
+  }
+  items.forEach((task) => {
+    const editField = document.getElementById(`status-${task.index}`);
+    editField.addEventListener('change', () => {
+      task.completed = editField.value;
+      localStorage.setItem('lists', JSON.stringify(items));
     });
   });
 }
@@ -62,6 +79,7 @@ export function deleteTaks(ul) {
       localStorage.setItem('lists', JSON.stringify(NewList));
       loadTasks(JSON.stringify(NewList), ul);
       updateTaks();
+      changeStatus();
       deleteTaks(ul);
     });
   });
@@ -89,6 +107,7 @@ export function addTask(description, ul) {
     event.preventDefault();
     addTask(document.querySelector('#new-item'), ul);
     updateTaks();
+    changeStatus();
     deleteTaks(ul);
   });
 }
