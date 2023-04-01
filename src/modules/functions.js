@@ -1,6 +1,7 @@
 import arrowReapeat from '../assets/arrow-repeat.svg';
 import threeDots from '../assets/three-dots-vertical.svg';
 import trach from '../assets/trash.svg';
+import changeStatus from './statusUpdate.js';
 
 export const loadTasks = (localS, ul) => {
   let lists = `<li class="li-header"><h2>Today's To Do </h2><img class="right-icons-h" cl src="${arrowReapeat}"></li>`;
@@ -23,8 +24,6 @@ export const loadTasks = (localS, ul) => {
         completed ? 'checked' : ''
       }  type='checkbox' id="status-${index}" value="${completed}" /><textarea id="edit-${index}">${description}</textarea></div> <img class="right-icons" id="remove-${index}" src="${threeDots}"></li>`;
     });
-    lists
-      += '<li class="btn-clear"><button type="button">Clear all completed</button></li>';
     return lists;
   };
 
@@ -45,35 +44,12 @@ export function updateTaks() {
   });
 }
 
-export function changeStatus() {
-  const editt = [];
-  if (localStorage.getItem('lists')) {
-    editt.push(...JSON.parse(localStorage.getItem('lists')));
-  }
-  editt.forEach((task) => {
-    const check = document.getElementById(`status-${task.index}`);
-    check.addEventListener('change', () => {
-      const neww = editt.map((p) => {
-        if (p.index === task.index) {
-          return {
-            description: p.description,
-            completed: !p.completed,
-            index: p.index,
-          };
-        }
-        return p;
-      });
-      localStorage.setItem('lists', JSON.stringify(neww));
-      changeStatus();
-    });
-  });
-}
-
 export function deleteTaks(ul) {
   const tobeDelate = [];
   if (localStorage.getItem('lists')) {
     tobeDelate.push(...JSON.parse(localStorage.getItem('lists')));
   }
+  let i = 0;
   tobeDelate.forEach((task) => {
     const removeBtn = document.getElementById(`remove-${task.index}`);
     removeBtn.addEventListener('mouseover', () => {
@@ -86,13 +62,43 @@ export function deleteTaks(ul) {
       const NewList = tobeDelate.filter(
         (element) => element.index !== task.index,
       );
-      localStorage.setItem('lists', JSON.stringify(NewList));
-      loadTasks(JSON.stringify(NewList), ul);
+      const NewListKeys = NewList.map((p) => {
+        i += 1;
+        return {
+          description: p.description,
+          completed: p.completed,
+          index: i,
+        };
+      });
+      localStorage.setItem('lists', JSON.stringify(NewListKeys));
+      loadTasks(JSON.stringify(NewListKeys), ul);
       deleteTaks(ul);
       updateTaks();
       changeStatus();
     });
   });
+}
+
+export function deleteAllTaks(ul) {
+  const tobeDelate = [];
+  if (localStorage.getItem('lists')) {
+    tobeDelate.push(...JSON.parse(localStorage.getItem('lists')));
+  }
+  const NewList = tobeDelate.filter((element) => element.completed !== true);
+  let i = 0;
+  const NewListKeys = NewList.map((p) => {
+    i += 1;
+    return {
+      description: p.description,
+      completed: p.completed,
+      index: i,
+    };
+  });
+  localStorage.setItem('lists', JSON.stringify(NewListKeys));
+  loadTasks(JSON.stringify(NewListKeys), ul);
+  deleteTaks(ul);
+  updateTaks();
+  changeStatus();
 }
 
 export function addTask(description, ul) {
