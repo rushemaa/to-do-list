@@ -90,6 +90,7 @@ export function deleteTaks(ul) {
       loadTasks(JSON.stringify(NewList), ul);
       deleteTaks(ul);
       updateTaks();
+      changeStatus();
     });
   });
 }
