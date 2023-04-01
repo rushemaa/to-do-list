@@ -46,15 +46,25 @@ export function updateTaks() {
 }
 
 export function changeStatus() {
-  const items = [];
+  const editt = [];
   if (localStorage.getItem('lists')) {
-    items.push(...JSON.parse(localStorage.getItem('lists')));
+    editt.push(...JSON.parse(localStorage.getItem('lists')));
   }
-  items.forEach((task) => {
-    const editField = document.getElementById(`status-${task.index}`);
-    editField.addEventListener('change', () => {
-      task.completed = editField.value;
-      localStorage.setItem('lists', JSON.stringify(items));
+  editt.forEach((task) => {
+    const check = document.getElementById(`status-${task.index}`);
+    check.addEventListener('change', () => {
+      const neww = editt.map((p) => {
+        if (p.index === task.index) {
+          return {
+            description: p.description,
+            completed: !p.completed,
+            index: p.index,
+          };
+        }
+        return p;
+      });
+      localStorage.setItem('lists', JSON.stringify(neww));
+      changeStatus();
     });
   });
 }
@@ -78,9 +88,9 @@ export function deleteTaks(ul) {
       );
       localStorage.setItem('lists', JSON.stringify(NewList));
       loadTasks(JSON.stringify(NewList), ul);
+      deleteTaks(ul);
       updateTaks();
       changeStatus();
-      deleteTaks(ul);
     });
   });
 }
@@ -106,8 +116,8 @@ export function addTask(description, ul) {
   addInput.addEventListener('submit', (event) => {
     event.preventDefault();
     addTask(document.querySelector('#new-item'), ul);
+    deleteTaks(ul);
     updateTaks();
     changeStatus();
-    deleteTaks(ul);
   });
 }
