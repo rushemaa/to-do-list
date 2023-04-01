@@ -127,6 +127,12 @@ li input {
 
 .right-icons {
   line-height: 0;
+  cursor: pointer;
+  padding-right: 10px;
+}
+
+.right-icons-h {
+  line-height: 0;
   cursor: move;
   padding-right: 10px;
 }
